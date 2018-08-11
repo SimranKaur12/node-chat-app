@@ -9,8 +9,3 @@ var socket = io();
                 console.log("Got new message");
                 console.log(newMessage);
             });
-
-            socket.emit("createMessage", ({
-                from: "simran",
-                message: "hey!"
-            }));
