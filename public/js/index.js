@@ -21,6 +21,16 @@ var socket = io();
             //     console.log("Got it.", data);
             // });
 
+            socket.on("newLocationMessage", function (message) {
+                var li = jQuery("<li></li>");
+                var a = jQuery("<a target='_blank'>My Current Location</a>");
+
+                li.text(`${message.from}:`);
+                a.attr("href", message.url);
+                li.append(a);
+                jQuery("#messages").append(li);
+            });
+
             jQuery("#messageform").on("submit", function(e) {
                 e.preventDefault();
 
@@ -30,4 +40,20 @@ var socket = io();
                 }, function() {
 
                 });
+            });
+
+            var locationButton = jQuery("#locationButton");
+            locationButton.on("click", function() {
+                if(!navigator.geolocation) {
+                    alert("Geolocation API is not compatible with your browser");
+                }
+
+                navigator.geolocation.getCurrentPosition(function (position) {
+                   socket.emit("createLocationMessage", {
+                       latitude: position.coords.latitude,
+                       longitude: position.coords.longitude
+                   });
+                });
+            }, function() {
+                alert("Unable to fetch the position.");
             });
