@@ -54,7 +54,6 @@ socket.on("newMessage", function (newMessage) {
 	});
 	jQuery("#messages").append(html);
 	scrollToBottom();
-
 	// var li = jQuery("<li></li>");
 	// li.text(`${newMessage.from}: ${formattedTime}  ${newMessage.text}`);
 	// jQuery("#messages").append(li);

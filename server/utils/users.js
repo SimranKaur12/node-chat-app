@@ -28,6 +28,11 @@ class Users {
 		var usersArray = users.map((user) => user.name);
 		return usersArray;
 	}
+
+	getRoomList() {
+		var roomsArray = this.users.map(element => element.room).filter((x, i, a) => a.indexOf(x) == i);
+		return roomsArray;
+	}
 }
 
 module.exports = {

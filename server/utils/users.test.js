@@ -68,4 +68,9 @@ describe("Users", () => {
 		var response = users.getUser("9");
 		expect(response).toBeFalsy();
 	});
+
+	it("should return a list of the room names", () => {
+		var response = users.getRoomList();
+		expect(response.length).toBe(2);
+	});
 });

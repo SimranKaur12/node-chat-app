@@ -2,6 +2,7 @@ const path = require("path");
 const express = require("express");
 const http = require("http");
 const socketIO = require("socket.io");
+const notifier = require("node-notifier");
 
 const {generateMessage, generateLocationMessage} = require("./utils/message");
 const {isRealString} = require("./utils/validators");
@@ -42,6 +43,14 @@ io.on("connection", (socket) => {
 
 		if(user && isRealString(message.text)) {
 			io.to(user.room).emit("newMessage", generateMessage(user.name, message.text));
+			// socket.broadcast.to(user.room).emit("notifyAll",user.name);
+			notifier.notify({
+				title: "New Message",
+				message: `${user.name} has messaged.`,
+				sound:true,
+				timeout: 3
+			});
+			
 		}
 		
 		callback();
@@ -70,7 +79,8 @@ io.on("connection", (socket) => {
     
 });
 
-
 server.listen(port, () => {
 	console.log(`Server started on port ${port}`);
 });
+
+// module.exports = {users};
