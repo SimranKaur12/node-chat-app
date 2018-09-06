@@ -115,3 +115,36 @@ locationButton.on("click", function () {
 	locationButton.removeAttr("disabled").text("Send location");
 	alert("Unable to fetch the position.");
 });
+
+socket.on("notifyAll", function (username) {
+	if(!(Notification in window)) {
+		alert("The browser does not support notifications.");
+	} 
+	
+	else if(Notification.permission === "granted") {
+		notify(username);
+	}
+	
+	else if(Notification.permission !== "denied") {
+		Notification.requestPermission(function (permission) {
+			if(permission === "granted") {
+				notify(username);
+			}
+			else {
+				alert("Notifications are disabled.");
+			}
+		});
+	}
+});
+	
+	
+	
+var notify = (username) => {
+		
+	var notification = new Notification(username, {
+		icon: "https://www.google.co.in/imgres?imgurl=https%3A%2F%2Fcdn.iconscout.com%2Fpublic%2Fimages%2Ficon%2Fpremium%2Fpng-512%2Fnotification-one-email-letter-mail-message-envelope-37bdb1328250efde-512x512.png&imgrefurl=https%3A%2F%2Ficonscout.com%2Ficon%2Femail-notification-2&docid=sEwXTauE_uHzZM&tbnid=t_ng3Ac8erErqM%3A&vet=10ahUKEwiYvpL4zKXdAhULfCsKHcWqDDUQMwicASgCMAI..i&w=512&h=512&safe=active&bih=672&biw=1301&q=notification%20icons&ved=0ahUKEwiYvpL4zKXdAhULfCsKHcWqDDUQMwicASgCMAI&iact=mrc&uact=8",
+		body: "New message received"
+	});
+	
+	setTimeout(notification.close.bind(notification), 6000);
+};

@@ -43,7 +43,7 @@ io.on("connection", (socket) => {
 
 		if(user && isRealString(message.text)) {
 			io.to(user.room).emit("newMessage", generateMessage(user.name, message.text));
-			// socket.broadcast.to(user.room).emit("notifyAll",user.name);
+			socket.broadcast.to(user.room).emit("notifyAll",user.name);
 			notifier.notify({
 				title: "New Message",
 				message: `${user.name} has messaged.`,
